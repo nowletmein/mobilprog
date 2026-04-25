@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BudgetTracker</string>
+    <string name="login_title">Üdvözöljük</string>
+    <string name="username">Felhasználónév</string>
+    <string name="password">Jelszó</string>
+    <string name="login">Bejelentkezés</string>
+    <string name="login_error">Hibás adatok!</string>
+    <string-array name="expense_types">
+        <item>Élelmiszer</item>
+        <item>szükséges kiadások</item>
+        <item>Egyéb</item>
+    </string-array>
+</resources>
