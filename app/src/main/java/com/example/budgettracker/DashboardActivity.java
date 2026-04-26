@@ -30,7 +30,7 @@ public class DashboardActivity extends AppCompatActivity {
     PieChart pieChart;
     Button btnAddExpense;
 
-    // Lista elemek
+
     RecyclerView recyclerView;
     ExpenseAdapter adapter;
     List<Expense> expenseList;
@@ -43,14 +43,14 @@ public class DashboardActivity extends AppCompatActivity {
 
         myDb = new DatabaseHelper(this);
 
-        // Lekérjük, ki van belépve
+
         loggedInUser = getSharedPreferences("UserPrefs", MODE_PRIVATE).getString("current_user", "");
 
         totalSpentTv = findViewById(R.id.totalSpentTv);
         pieChart = findViewById(R.id.pieChart);
         btnAddExpense = findViewById(R.id.btnAddExpense);
 
-        // RecyclerView beállítása
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -83,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView rv, RecyclerView.ViewHolder vh, RecyclerView.ViewHolder target) {
-                return false; // Erre nincs szükségünk (ez az áthelyezés lenne)
+                return false;
             }
 
             @Override
@@ -91,22 +91,23 @@ public class DashboardActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
                 Expense expenseToDelete = adapter.getExpenseAt(position);
 
-                // A megerősítő ablak (Popup)
+
                 new AlertDialog.Builder(DashboardActivity.this)
-                        .setTitle("Delete Item")
-                        .setMessage("Are you sure you want to delete this?")
-                        .setPositiveButton("Yes", (dialog, which) -> {
-                            // Törlés az adatbázisból
+                        .setTitle(getString(R.string.delete_item))
+                        .setMessage(getString(R.string.delete))
+                        .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+
                             myDb.deleteExpense(expenseToDelete.getId());
-                            // Lista frissítése
-                            loadExpenses();
-                            Toast.makeText(DashboardActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+
+
+                            updateUI();
+                            Toast.makeText(DashboardActivity.this, getString(R.string.deleted), Toast.LENGTH_SHORT).show();
                         })
-                        .setNegativeButton("No", (dialog, which) -> {
-                            // Ha "Nem", akkor visszahúzzuk az elemet a helyére
+                        .setNegativeButton(getString(R.string.no), (dialog, which) -> {
+
                             adapter.notifyItemChanged(position);
                         })
-                        .setCancelable(false) // Ne lehessen mellékattintással bezárni
+                        .setCancelable(false)
                         .show();
             }
         }).attachToRecyclerView(recyclerView);
@@ -117,7 +118,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI(); // Frissítünk mindent, ha visszajövünk a mentésből
+        updateUI();
     }
 
     private void updateUI() {
@@ -126,20 +127,28 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void updateStats() {
-        // 1. Egyenleg megjelenítése (Bevételek - Kiadások)
         double balance = myDb.getBalanceByUser(loggedInUser);
         totalSpentTv.setText(getString(R.string.max_budget, String.valueOf(balance)));
 
-        // 2. Csak a KIADÁSOK (negatív értékek) lekérése a diagramhoz
         List<PieEntry> entries = new ArrayList<>();
         Cursor cursor = myDb.getExpensesOnlySummary(loggedInUser);
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                String category = cursor.getString(0);
-                // Az abszolút értéket vesszük (pl. -200-ból 200), hogy a tortadiagram ki tudja rajzolni
+                String dbKey = cursor.getString(0);
                 float value = Math.abs(cursor.getFloat(1));
-                entries.add(new PieEntry(value, category));
+
+
+                String localizedCategory;
+                if (dbKey.equals("FOOD")) {
+                    localizedCategory = getString(R.string.food);
+                } else if (dbKey.equals("ESSENTIAL")) {
+                    localizedCategory = getString(R.string.essential);
+                } else {
+                    localizedCategory = getString(R.string.other);
+                }
+
+                entries.add(new PieEntry(value, localizedCategory));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -150,11 +159,10 @@ public class DashboardActivity extends AppCompatActivity {
 
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
-        pieChart.setCenterText("Kiadások"); // Csak a költéseket mutatja
+        pieChart.setCenterText(getString(R.string.spending));
         pieChart.getDescription().setEnabled(false);
         pieChart.animateY(800);
         pieChart.invalidate();
-
     }
 
     private void loadExpenses() {
@@ -163,15 +171,18 @@ public class DashboardActivity extends AppCompatActivity {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-
                 int id = cursor.getInt(0);
                 String title = cursor.getString(1);
-                String amount = cursor.getString(2);
+
+
+                double amount = cursor.getDouble(2);
+
                 String date = cursor.getString(3);
                 String type = cursor.getString(4);
 
 
-                expenseList.add(new Expense(id, title, amount, type, date));
+                expenseList.add(new Expense(id, title, amount, type,date));
+
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -180,7 +191,7 @@ public class DashboardActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void handleLogout() {
-        // Töröljük az elmentett felhasználót
+
         getSharedPreferences("UserPrefs", MODE_PRIVATE).edit().clear().apply();
 
         // Vissza a Login képernyőre

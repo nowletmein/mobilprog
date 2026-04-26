@@ -31,25 +31,35 @@ public class AddExpenseActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(v -> {
             String title = editTitle.getText().toString().trim();
             String amountStr = editAmount.getText().toString().trim();
-            String type = typeSpinner.getSelectedItem().toString();
+
+
+            int selectedPosition = typeSpinner.getSelectedItemPosition();
+            String dbKey;
+
+            // Feltételezve, hogy a Spinner sorrendje: 0: Élelmiszer/Food, 1: Szükséges/Essential, 2: Egyéb/Other
+            switch (selectedPosition) {
+                case 0: dbKey = "FOOD"; break;
+                case 1: dbKey = "ESSENTIAL"; break;
+                default: dbKey = "OTHER"; break;
+            }
 
             if (!title.isEmpty() && !amountStr.isEmpty()) {
                 try {
                     double amount = Double.parseDouble(amountStr);
                     String date = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(new java.util.Date());
 
-                        // ITT A VÁLTOZÁS: Átadjuk a loggedInUser-t is az 5. paraméternek!
-                    if(myDb.insertData(title, amount, date, type, loggedInUser)) {
-                        Toast.makeText(this, "Mentve!", Toast.LENGTH_SHORT).show();
+                    // 2. A 'type' helyett a 'dbKey'-t mentjük el!
+                    if(myDb.insertData(title, amount, date, dbKey, loggedInUser)) {
+                        Toast.makeText(this, getString(R.string.save_to_database), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(this, "Hiba a mentés során!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.error_save), Toast.LENGTH_SHORT).show();
                     }
                 } catch (NumberFormatException e) {
-                    Toast.makeText(this, "Érvénytelen összeg!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.bad_amount), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Tölts ki mindent!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.fill_everything), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_logout"
-        android:title="Logout" />
+        android:title="@string/logout" />
     <group android:id="@+id/language_group">
-        <item android:title="--- Language ---" android:enabled="false" />
+        <item android:title="@string/settings_language" android:enabled="false" />
         <item
             android:id="@+id/lang_en"
-            android:title="English" />
+            android:title="@string/english" />
         <item
             android:id="@+id/lang_hu"
-            android:title="Hungarian" />
+            android:title="@string/hungarian" />
     </group>
 </menu>

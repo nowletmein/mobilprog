@@ -26,14 +26,17 @@ public class RegisterActivity extends AppCompatActivity {
             String pass = regPass.getText().toString().trim();
 
             if (user.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Tölts ki mindent!", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(this, getString(R.string.fill_all), Toast.LENGTH_SHORT).show();
             } else {
                 boolean inserted = myDb.registerUser(user, pass);
                 if (inserted) {
-                    Toast.makeText(this, "Sikeres regisztráció!", Toast.LENGTH_SHORT).show();
-                    finish(); // Visszazárja ezt az ablakot a Login-hoz
+
+                    Toast.makeText(this, getString(R.string.reg_success), Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
-                    Toast.makeText(this, "Hiba! Talán már létezik ez a név?", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(this, getString(R.string.reg_error), Toast.LENGTH_SHORT).show();
                 }
             }
         });

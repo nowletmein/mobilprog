@@ -5,10 +5,44 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="login_error">Invalid credentials!</string>
+    <string name="register_link">NO ACCOUNT? REGISTER</string>
+    <string name="create_account">Create Account</string>
+    <string name="choose_username">Choose Username</string>
+    <string name="choose_password">Choose Password</string>
+    <string name="register">Register</string>
+    <string name="change_language">Change Language</string>
+    <string name="options">Options</string>
     <string-array name="expense_types">
         <item>Food</item>
         <item>Necessities</item>
         <item>Other</item>
     </string-array>
     <string name="max_budget">Max budget: %1$s Ft</string>
+    <string name="add_item">+ Add New Expense</string>
+    <string name="amount">Amount (pl. -2000 or 2000)</string>
+    <string name="itemName">What did you buy?/Got</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_to_database">Save</string>
+    <string name="spending">Expenses</string>
+    <string name="food">Food</string>
+    <string name="essential">Essential</string>
+    <string name="other">Other</string>
+    <string name="logout">Logout</string>
+    <string name="english">English</string>
+    <string name="hungarian">Hungarian</string>
+    <string name="settings_language">--- Languages ---</string>
+    <string name="h_login_error">Fill Out The Spaces</string>
+    <string name="no_user_found">Bad Credentials or User Doesnt Exist</string>
+    <string name="fill_all">Please fill all fields!</string>
+    <string name="reg_success">Registration successful!</string>
+    <string name="reg_error">Error! Maybe username already exists?</string>
+    <string name="reg_title">Register New Account</string>
+    <string name="delete">Are you sure you want to delete this?</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="deleted">Deleted</string>
+    <string name="error_save">Error During Saving</string>
+    <string name="bad_amount">Invalid amount!</string>
+    <string name="fill_everything">Fill in everything!</string>
 </resources>

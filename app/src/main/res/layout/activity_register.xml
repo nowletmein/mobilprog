@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Account"
+        android:text="@string/create_account"
         android:textSize="26sp"
         android:textStyle="bold"
         android:layout_marginBottom="40dp"/>
@@ -18,7 +18,7 @@
         android:id="@+id/regUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Choose Username"
+        android:hint="@string/choose_username"
         android:minHeight="48dp"
         android:layout_marginBottom="16dp"/>
 
@@ -26,7 +26,7 @@
         android:id="@+id/regPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Choose Password"
+        android:hint="@string/choose_password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:layout_marginBottom="24dp"/>
@@ -35,6 +35,6 @@
         android:id="@+id/btnRegisterConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register" />
+        android:text="@string/register" />
 
 </LinearLayout>

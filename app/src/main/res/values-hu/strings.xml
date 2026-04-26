@@ -6,10 +6,44 @@
     <string name="password">Jelszó</string>
     <string name="login">Bejelentkezés</string>
     <string name="login_error">Hibás adatok!</string>
+    <string name="register_link">NINCS MÉG FIÓKOD? REGISZTRÁJ</string>
+    <string name="create_account">Fiók létrehozása</string>
+    <string name="choose_username">Válassz Felhasználónevet</string>
+    <string name="choose_password">Válassz Jelszót</string>
+    <string name="register">Regisztráció</string>
+    <string name="change_language">Válassz Nyelvet</string>
+    <string name="options">Opciók</string>
     <string-array name="expense_types">
         <item>Élelmiszer</item>
         <item>szükséges kiadások</item>
         <item>Egyéb</item>
     </string-array>
     <string name="max_budget">Max költségvetés: %1$s Ft</string>
+    <string name="add_item">+ új költség hozzá adása</string>
+    <string name="itemName">Mit vettél/Kaptál ?</string>
+    <string name="amount">Összeg (pl. -2000 vagy 2000)</string>
+    <string name="cancel">Mégse</string>
+    <string name="save_to_database">Mentés</string>
+    <string name="spending">Kiadások</string>
+    <string name="food">Élelmiszer</string>
+    <string name="essential">szükséges kiadások</string>
+    <string name="other">Egyéb</string>
+    <string name="logout">Kijelentkezés</string>
+    <string name="english">Angol</string>
+    <string name="hungarian">Magyar</string>
+    <string name="settings_language">--- Nyelvek ---</string>
+    <string name="h_login_error">Töltsd ki a mezőket!</string>
+    <string name="no_user_found">Hibás adatok vagy nem létező felhasználó!</string>
+    <string name="fill_all">Tölts ki mindent!</string>
+    <string name="reg_success">Sikeres regisztráció!</string>
+    <string name="reg_error">Hiba! Talán már létezik ez a név?</string>
+    <string name="reg_title">Új fiók regisztrációja</string>
+    <string name="delete">Biztos törölni szeretnéd ezt ?</string>
+    <string name="delete_item">Törlés</string>
+    <string name="yes">Igen</string>
+    <string name="no">Nem</string>
+    <string name="deleted">Törölve</string>
+    <string name="error_save">Hiba a mentés során!</string>
+    <string name="bad_amount">Érvénytelen összeg!</string>
+    <string name="fill_everything">Tölts ki mindent!</string>
 </resources>
