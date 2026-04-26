@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Logout" />
+    <group android:id="@+id/language_group">
+        <item android:title="--- Language ---" android:enabled="false" />
+        <item
+            android:id="@+id/lang_en"
+            android:title="English" />
+        <item
+            android:id="@+id/lang_hu"
+            android:title="Hungarian" />
+    </group>
+</menu>

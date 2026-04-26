@@ -21,45 +21,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "AMOUNT";
     public static final String COL_4 = "DATE";
     public static final String COL_5 = "TYPE";
+    public static final String COL_USER = "USERNAME";
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, AMOUNT REAL, DATE TEXT, TYPE TEXT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, AMOUNT REAL, DATE TEXT, TYPE TEXT, USERNAME TEXT)");
         db.execSQL("CREATE TABLE " + USER_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, USERNAME TEXT, PASSWORD TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
         onCreate(db);
     }
 
     // ÚJ KIADÁS MENTÉSE (Ezt hívjuk meg a DashboardActivity-ben)
-    public boolean insertData(String title, double amount, String date, String type) {
+    public boolean insertData(String title, double amount, String date, String type, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, title);
         contentValues.put(COL_3, amount);
         contentValues.put(COL_4, date);
         contentValues.put(COL_5, type);
+        contentValues.put(COL_USER, username); // Elmentjük a júzert!
         long result = db.insert(TABLE_NAME, null, contentValues);
         return result != -1;
     }
 
 
-    public Cursor getAllData() {
+    public Cursor getAllDataByUser(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE USERNAME=?", new String[]{username});
     }
-    public Cursor getSummaryByType() {
+    public double getBalanceByUser(String username) {
+        double balance = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        // A SUM automatikusan kivonja a negatívokat és hozzáadja a pozitívokat
+        Cursor cursor = db.rawQuery("SELECT SUM(AMOUNT) FROM " + TABLE_NAME + " WHERE USERNAME=?", new String[]{username});
+        if (cursor.moveToFirst()) {
+            balance = cursor.getDouble(0);
+        }
+        cursor.close();
+        return balance;
+    }
+    public void deleteExpense(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT TYPE, SUM(AMOUNT) FROM " + TABLE_NAME + " GROUP BY TYPE", null);
+        db.delete(TABLE_NAME, "ID=?", new String[]{String.valueOf(id)});
+        db.close();
     }
-
+    public Cursor getExpensesOnlySummary(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT TYPE, SUM(AMOUNT) FROM " + TABLE_NAME +
+                " WHERE USERNAME=? AND AMOUNT < 0 GROUP BY TYPE", new String[]{username});
+    }
     public double getTotalAmount() {
         double total = 0;
         SQLiteDatabase db = this.getWritableDatabase();

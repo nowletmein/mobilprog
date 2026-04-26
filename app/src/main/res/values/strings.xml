@@ -10,4 +10,5 @@
         <item>Necessities</item>
         <item>Other</item>
     </string-array>
+    <string name="max_budget">Max budget: %1$s Ft</string>
 </resources>

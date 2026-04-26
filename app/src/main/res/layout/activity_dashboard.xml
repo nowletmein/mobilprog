@@ -3,6 +3,18 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <ImageButton
+        android:id="@+id/btnOptions"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/abc_ic_menu_overflow_material"
+        android:contentDescription="Options Menu"
+        android:layout_margin="5dp"
+        android:elevation="4dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +28,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             android:text="Total: 0 Ft" />
 
         <com.github.mikephil.charting.charts.PieChart

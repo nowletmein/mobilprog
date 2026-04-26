@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(v -> handleLogin());
 
+
         // Átlépés a regisztrációs oldalra
         goToRegisterBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, RegisterActivity.class);
@@ -49,11 +50,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (myDb.checkUser(user, pass)) {
-            navigateToDashboard();
-        } else {
+            // Itt mentjük el a "jegyzetbe" a felhasználónevet
+            getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                    .edit()
+                    .putString("current_user", user) // A 'user' változó tartalmazza a beírt nevet
+                    .apply(); // Ez véglegesíti a mentést
+
+            // Csak ezután megyünk át a Dashboardra
+            Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+            startActivity(intent);
+        }else {
             showError("Hibás adatok vagy nem létező felhasználó!");
         }
     }
+
     private void navigateToDashboard() {
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);

@@ -11,4 +11,5 @@
         <item>szükséges kiadások</item>
         <item>Egyéb</item>
     </string-array>
+    <string name="max_budget">Max költségvetés: %1$s Ft</string>
 </resources>
